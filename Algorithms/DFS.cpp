@@ -3,7 +3,7 @@ using namespace std;
 
 
 
-bool dfs(unordered_map<int, vector<int>> adj_arr, int n, int start) {
+bool dfs(unordered_map<int, vector<int>> graph, int n, int start) {
 
     unordered_map<int, bool> visited;
     stack<int> s;
@@ -16,7 +16,7 @@ bool dfs(unordered_map<int, vector<int>> adj_arr, int n, int start) {
         s.pop();
         result.push_back(current);
         
-        for(auto i: adj_arr[current]) {
+        for(auto i: graph[current]) {
             if (!visited[i]) {
                 visited[i] = true;
                 s.push(i);

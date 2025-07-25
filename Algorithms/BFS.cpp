@@ -2,7 +2,7 @@
 using namespace std;
 
 
-bool bfs(unordered_map<int, vector<int>> adj_arr, int n, int start) {
+bool bfs(unordered_map<int, vector<int>> graph, int n, int start) {
 
     unordered_map<int, bool> visited;
     queue<int> q;
@@ -15,7 +15,7 @@ bool bfs(unordered_map<int, vector<int>> adj_arr, int n, int start) {
         q.pop();
         result.push_back(current);
         
-        for(auto i: adj_arr[current]) {
+        for(auto i: graph[current]) {
             if (!visited[i]) {
                 visited[i] = true;
                 q.push(i);
