@@ -28,19 +28,23 @@ vector<tuple<int,int,int>> KruskalAlgorithm(vector<edgeInfo> &edges) {
 }
 
 int main() {
+    cout << "=== Kruskal's Algorithm for Minimum Spanning Tree ===" << endl;
+    cout << "Enter number of edges: ";
+    int numEdges;
+    cin >> numEdges;
+    
     vector<edgeInfo> edges;
-    edges.push_back(make_tuple(1, 1, 4));
-    edges.push_back(make_tuple(2, 1, 2));
-    edges.push_back(make_tuple(3, 2, 3));  
-    edges.push_back(make_tuple(3, 2, 4));
-    edges.push_back(make_tuple(4, 1, 5));
-    edges.push_back(make_tuple(5, 3, 4));
-    edges.push_back(make_tuple(7, 2, 6));
-    edges.push_back(make_tuple(8, 3, 6));
-    edges.push_back(make_tuple(9, 4, 5));
-
-    vector<tuple<int,int,int>> mst = KruskalAlgorithm( edges);
-    cout << "Minimum Spanning Tree Edges:" << endl;
+    
+    cout << "Enter edges (format: weight from to):" << endl;
+    for(int i = 0; i < numEdges; i++) {
+        int weight, from, to;
+        cin >> weight >> from >> to;
+        edges.push_back(make_tuple(weight, from, to));
+    }
+    
+    vector<tuple<int,int,int>> mst = KruskalAlgorithm(edges);
+    
+    cout << "\nMinimum Spanning Tree edges:" << endl;
     cout << "Edge\t\tWeight" << endl;
     cout << "----\t\t------" << endl;
     
@@ -53,7 +57,7 @@ int main() {
         totalWeight += weight;
     }
     cout << "Total Weight: " << totalWeight << endl;
-
+    cout << "Total edges in MST: " << mst.size() << endl;
 
     return 0;
 }

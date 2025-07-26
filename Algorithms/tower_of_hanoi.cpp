@@ -22,5 +22,30 @@ void hanoi_stack(int n, char beg, char aux, char end) {
 }
 
 int main() {
-    hanoi_stack(4, 'A', 'B', 'C');
+    cout << "=== Tower of Hanoi Problem ===" << endl;
+    cout << "Enter number of disks: ";
+    int n;
+    cin >> n;
+    
+    cout << "Enter source rod (A, B, or C): ";
+    char source;
+    cin >> source;
+    
+    cout << "Enter auxiliary rod (A, B, or C): ";
+    char auxiliary;
+    cin >> auxiliary;
+    
+    cout << "Enter destination rod (A, B, or C): ";
+    char destination;
+    cin >> destination;
+    
+    cout << "\nSolution steps to move " << n << " disks from " << source 
+         << " to " << destination << " using " << auxiliary << ":" << endl;
+    cout << "------------------------------------------------------" << endl;
+    
+    hanoi_stack(n, source, auxiliary, destination);
+    
+    cout << "\nTotal moves required: " << (1 << n) - 1 << endl; // 2^n - 1
+    
+    return 0;
 }

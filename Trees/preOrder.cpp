@@ -18,7 +18,6 @@ class BinaryTree
 {
     private:
         Node* root;
-    
         Node* insert(Node* node, int val)
         {
             if(node ==nullptr){

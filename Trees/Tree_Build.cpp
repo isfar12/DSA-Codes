@@ -46,20 +46,94 @@ class BinaryTree
         void insert(int val) {
             root = insert(root, val);
         }
-
-
-
+        
+        void inorder(Node* node) {
+            if(node != nullptr) {
+                inorder(node->left);
+                cout << node->data << " ";
+                inorder(node->right);
+            }
+        }
+        
+        void preorder(Node* node) {
+            if(node != nullptr) {
+                cout << node->data << " ";
+                preorder(node->left);
+                preorder(node->right);
+            }
+        }
+        
+        void postorder(Node* node) {
+            if(node != nullptr) {
+                postorder(node->left);
+                postorder(node->right);
+                cout << node->data << " ";
+            }
+        }
+        
+        void printInorder() {
+            cout << "Inorder: ";
+            inorder(root);
+            cout << endl;
+        }
+        
+        void printPreorder() {
+            cout << "Preorder: ";
+            preorder(root);
+            cout << endl;
+        }
+        
+        void printPostorder() {
+            cout << "Postorder: ";
+            postorder(root);
+            cout << endl;
+        }
+        
+        bool search(int val) {
+            return searchHelper(root, val);
+        }
+        
+    private:
+        bool searchHelper(Node* node, int val) {
+            if(node == nullptr) return false;
+            if(node->data == val) return true;
+            if(val < node->data) return searchHelper(node->left, val);
+            return searchHelper(node->right, val);
+        }
 };
 
 int main() {
-
-    int values[] = {44, 30, 50, 22, 60, 55, 77, 57};
-
+    cout << "=== Binary Search Tree Implementation ===" << endl;
+    cout << "Enter number of values to insert: ";
+    int n;
+    cin >> n;
+    
     BinaryTree tree;
-    // Build tree from the sequence
-    for (int val : values) {
+    
+    cout << "Enter " << n << " values: ";
+    for(int i = 0; i < n; i++) {
+        int val;
+        cin >> val;
         tree.insert(val);
+        cout << "Inserted " << val << endl;
     }
-
+    
+    cout << "\nTree Traversals:" << endl;
+    tree.printInorder();
+    tree.printPreorder();
+    tree.printPostorder();
+    
+    cout << "\nSearch for values:" << endl;
+    cout << "Enter value to search (or -1 to exit): ";
+    int searchVal;
+    while(cin >> searchVal && searchVal != -1) {
+        if(tree.search(searchVal)) {
+            cout << "Value " << searchVal << " found in the tree!" << endl;
+        } else {
+            cout << "Value " << searchVal << " not found in the tree." << endl;
+        }
+        cout << "Enter another value to search (or -1 to exit): ";
+    }
+    
     return 0;
 }

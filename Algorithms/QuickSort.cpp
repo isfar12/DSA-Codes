@@ -24,8 +24,21 @@ void quickSort(int arr[], int low, int high) {
 
 // Main function
 int main() {
-    int arr[] = {10, 7, 8, 9, 1, 5};
-    int n = sizeof(arr) / sizeof(arr[0]);
+    cout << "=== Quick Sort Algorithm ===" << endl;
+    cout << "Enter the number of elements: ";
+    int n;
+    cin >> n;
+    
+    int* arr = new int[n];
+    cout << "Enter " << n << " elements: ";
+    for(int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+    
+    cout << "Original array: ";
+    for (int i = 0; i < n; i++)
+        cout << arr[i] << " ";
+    cout << endl;
 
     quickSort(arr, 0, n - 1);
 
@@ -33,6 +46,7 @@ int main() {
     for (int i = 0; i < n; i++)
         cout << arr[i] << " ";
     cout << endl;
-
+    
+    delete[] arr;
     return 0;
 }

@@ -43,36 +43,57 @@ vector<pair<int,int>> primsAlgorithm(int n, unordered_map<int, vector<pair<int,i
 }
 
 int main() {
-    cout << "Starting Prim's Algorithm..." << endl;
-
+    cout << "=== Prim's Algorithm for Minimum Spanning Tree ===" << endl;
+    cout << "Enter number of vertices: ";
+    int n;
+    cin >> n;
+    
     unordered_map<int, vector<pair<int,int>>> graph;
-
-    // Manually add edges to avoid braced initialization issues (GPT)
-    graph[0].push_back(make_pair(1, 4));
-    graph[0].push_back(make_pair(2, 1));
     
-    graph[1].push_back(make_pair(0, 4));
-    graph[1].push_back(make_pair(2, 2));
-    graph[1].push_back(make_pair(3, 5));
-    graph[1].push_back(make_pair(4, 3));
+    cout << "Enter number of edges: ";
+    int edges;
+    cin >> edges;
     
-    graph[2].push_back(make_pair(0, 1));
-    graph[2].push_back(make_pair(1, 2));
-    graph[2].push_back(make_pair(3, 8));
-    graph[2].push_back(make_pair(4, 6));
-    
-    graph[3].push_back(make_pair(1, 5));
-    graph[3].push_back(make_pair(2, 8));
-    
-    graph[4].push_back(make_pair(1, 3));
-    graph[4].push_back(make_pair(2, 6));
-
-
-    vector<pair<int,int>> mst = primsAlgorithm(5, graph, 0);
-    cout << "Minimum Spanning Tree edges:" << endl;
-    for(int i = 0; i < mst.size(); i++) {
-        cout << "Edge: " << mst[i].first << " - " << mst[i].second << endl;
+    cout << "Enter edges (format: from to weight):" << endl;
+    for(int i = 0; i < edges; i++) {
+        int from, to, weight;
+        cin >> from >> to >> weight;
+        // Since MST works on undirected graphs, add both directions
+        graph[from].push_back(make_pair(to, weight));
+        graph[to].push_back(make_pair(from, weight));
     }
+    
+    cout << "Enter starting vertex: ";
+    int start;
+    cin >> start;
+    
+    vector<pair<int,int>> mst = primsAlgorithm(n, graph, start);
+    
+    cout << "\nMinimum Spanning Tree edges:" << endl;
+    cout << "Edge\t\tWeight" << endl;
+    cout << "----\t\t------" << endl;
+    
+    int totalWeight = 0;
+    for(int i = 0; i < mst.size(); i++) {
+        // Find the weight of this edge
+        int u = mst[i].first;
+        int v = mst[i].second;
+        int weight = 0;
+        
+        // Search for the weight in the adjacency list
+        for(auto edge : graph[u]) {
+            if(edge.first == v) {
+                weight = edge.second;
+                break;
+            }
+        }
+        
+        cout << u << " - " << v << "\t\t" << weight << endl;
+        totalWeight += weight;
+    }
+    
+    cout << "Total Weight: " << totalWeight << endl;
     cout << "Total edges in MST: " << mst.size() << endl;
+    
     return 0;
 }

@@ -29,21 +29,31 @@ bool dfs(unordered_map<int, vector<int>> graph, int n, int start) {
 }
 
 int main() {
-
-
+    cout << "=== DFS (Depth-First Search) ===" << endl;
+    cout << "Enter number of nodes: ";
+    int n;
+    cin >> n;
+    
     unordered_map<int, vector<int>> graph;
-
-    graph[1] = {2, 6};
-    graph[2] = {3, 4};
-    graph[3] = {};
-    graph[4] = {5};
-    graph[5] = {8};
-    graph[6] = {7,9};
-    graph[7] = {8};
-    graph[8] = {5};
-    graph[9] = {};
-
-    int start = 1;
-    dfs(graph, 9, start);
+    
+    cout << "Enter number of edges: ";
+    int edges;
+    cin >> edges;
+    
+    cout << "Enter edges (format: from to):" << endl;
+    for(int i = 0; i < edges; i++) {
+        int from, to;
+        cin >> from >> to;
+        graph[from].push_back(to);
+    }
+    
+    cout << "Enter starting node: ";
+    int start;
+    cin >> start;
+    
+    cout << "DFS traversal starting from node " << start << ": ";
+    dfs(graph, n, start);
+    cout << endl;
+    
     return 0;
 }
