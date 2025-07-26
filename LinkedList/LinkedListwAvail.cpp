@@ -1,66 +1,97 @@
 #include <iostream>
 using namespace std;
 
+const int SIZE = 100;
+
 struct Node {
     int data;
-    Node* next;
+    int next;
 };
 
-void print(Node* h) {
-    while (h) cout << h->data << " -> ", h = h->next;
-    cout << "NULL\n";
+Node nodes[SIZE];
+int avail = 5;
+int start = 0;
+
+void initialize() {
+    nodes[0] = {10, 1};
+    nodes[1] = {20, 2};
+    nodes[2] = {30, -1};
+
+    for (int i = 5; i < SIZE - 1; i++) {
+        nodes[i].next = i + 1;
+    }
+    nodes[SIZE - 1].next = -1;
 }
 
-void insert(Node*& avail, Node* x, int n) {
-    if (!avail) avail = new Node{0, nullptr};
-    Node* newNode = avail;
-    avail = avail->next;
-    newNode->data = n;
-    newNode->next = x->next;
-    x->next = newNode;
+int findIndexByValue(int value) {
+    int curr = start;
+    while (curr != -1) {
+        if (nodes[curr].data == value)
+            return curr;
+        curr = nodes[curr].next;
+    }
+    return -1;
 }
 
-void del(Node*& avail, Node*& head, int val) {
-    Node* curr = head, *prev = nullptr;
-    while (curr && curr->data != val) prev = curr, curr = curr->next;
-    if (!curr) return;
-    if (prev) prev->next = curr->next; else head = curr->next;
-    curr->next = avail; curr->data = 0; avail = curr;
+void insertAfterValue(int X_value, int N_value) {
+    if (avail == -1) {
+        cout << "No available nodes in avail list!" << endl;
+        return;
+    }
+
+    int X_index = findIndexByValue(X_value);
+    if (X_index == -1) {
+        cout << "Value " << X_value << " not found in the list!" << endl;
+        return;
+    }
+
+    int N_index = avail;
+    avail = nodes[avail].next;
+
+    nodes[N_index].data = N_value;
+    nodes[N_index].next = nodes[X_index].next;
+    nodes[X_index].next = N_index;
+
+    cout << "Inserted " << N_value << " after " << X_value << " successfully.\n";
+}
+
+void printList() {
+    int curr = start;
+    while (curr != -1) {
+        cout << nodes[curr].data << " -> ";
+        curr = nodes[curr].next;
+    }
+    cout << "NULL" << endl;
+}
+
+void printAvail() {
+    cout << "Avail list indexes: ";
+    int curr = avail;
+    while (curr != -1) {
+        cout << curr << " ";
+        curr = nodes[curr].next;
+    }
+    cout << endl;
 }
 
 int main() {
-    int n; cout << "Size: "; cin >> n;
-    Node* L = nullptr;
-    for (int i = 0; i < n; i++) {
-        int v; cin >> v;
-        if (!L) L = new Node{v, nullptr};
-        else {
-            Node* curr = L;
-            while (curr->next) curr = curr->next;
-            curr->next = new Node{v, nullptr};
-        }
-    }
-    
-    Node* avail = new Node{0, new Node{0, new Node{0, nullptr}}};
-    cout << "Main: "; print(L);
-    cout << "Avail: "; print(avail);
-    
-    int c;
-    while (cout << "\n1.Insert 2.Delete 3.Show 0.Exit: ", cin >> c, c) {
-        if (c == 1) {
-            int newVal, afterVal;
-            cout << "Value: "; cin >> newVal;
-            cout << "After: "; cin >> afterVal;
-            Node* curr = L;
-            while (curr && curr->data != afterVal) curr = curr->next;
-            if (curr) insert(avail, curr, newVal);
-        } else if (c == 2) {
-            int delVal; cout << "Delete: "; cin >> delVal;
-            del(avail, L, delVal);
-        } else if (c == 3) {
-            cout << "Main: "; print(L);
-            cout << "Avail: "; print(avail);
-        }
-    }
+    initialize();
+
+    cout << "Initial linked list:\n";
+    printList();
+    printAvail();
+
+    int X_value, N_value;
+    cout << "\nEnter value X (after which to insert): ";
+    cin >> X_value;
+    cout << "Enter new value N to insert: ";
+    cin >> N_value;
+
+    insertAfterValue(X_value, N_value);
+
+    cout << "\nUpdated linked list:\n";
+    printList();
+    printAvail();
+
     return 0;
 }
