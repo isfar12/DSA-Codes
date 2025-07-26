@@ -3,7 +3,7 @@ using namespace std;
 
 typedef tuple<int, int, int> edgeInfo;
 
-vector<pair<int,int>> KruskalAlgorithm(int n, vector<edgeInfo> &edges) {
+vector<pair<int,int>> KruskalAlgorithm(vector<edgeInfo> &edges) {
 
     vector<pair<int,int>> mst;
     set<int> visited;
@@ -39,7 +39,7 @@ int main() {
     edges.push_back(make_tuple(8, 3, 6));
     edges.push_back(make_tuple(9, 4, 5));
 
-    vector<pair<int,int>> mst = KruskalAlgorithm(7, edges);
+    vector<pair<int,int>> mst = KruskalAlgorithm( edges);
     cout << "Minimum Spanning Tree Edges:" << endl;
     for(auto edge: mst) {   
         cout << edge.first << " - " << edge.second << endl;
